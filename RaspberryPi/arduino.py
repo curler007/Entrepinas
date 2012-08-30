@@ -17,9 +17,17 @@ def getSerial():
 	#println('Creo nuevo serial, ser.open()')
 	return ser
 
+def writeSerial(com):
+	ser = getSerial()
+	try:
+		ser.flush()
+		ser.write(com)
+	finally:
+		ser.close()
+
 def readSerial(sensor):
 	logging.info('Declaro el serial')
-	#ser = serial.Serial('/dev/ttyACM0', 9600,timeout=10)
+	
 	ser = getSerial()
 	try:
 		logging.info('Escribo a Arduino pidiendole un puerto')
@@ -32,7 +40,8 @@ def readSerial(sensor):
 		dato=''
 		while dato=='' and i<intentos:
 			
-			ser.write(chr(sensor))
+
+			ser.write(sensor)
 
 			logging.info('Leo el dato')
 			#println('dato = ser.readline()')
@@ -41,12 +50,26 @@ def readSerial(sensor):
 			if dato=='':
 				logging.info('El dato es nulo, vuelvo a repetir hasta 5 veces')
 			i=i+1
-		datored = dato[:5]
+		#indice = 0 
+		#salir = False
+		#datored = ''
 		
+		#while (indice < len(dato)) and not salir: 
+		#	datored = datored + dato[indice]
+		#	if (dato[indice]=='.'):
+		#		i=0
+		#		for i in range(2):
+		#			datored = datored + dato[indice+i+1]
+		#		salir = True
+		#	indice = indice + 1 
+		#datored = dato[:6]
+		#fdatored = float(int(float(datored)*100)/100)
+		fdatored = float(dato)
 	finally:
 		ser.close()
 	
-	return datored
+	return fdatored;
+	#return float(datored)
 
 def getValor(sensor):
 	logging.info('Entro en getValor, voy a comprobar el bloqueo del dispositivo')
@@ -63,8 +86,17 @@ def getValor(sensor):
 		logging.info('Dispositivo bloqueado!')
 		return -1
 
+def ejecuta(com):
+	if bd.accedoDispositivo(1) == 1:
+		try:
+			writeSerial(com)
+		finally:
+			bd.sueltoDispositivo(1)
+
+
+
 def reset():
-	ser = serial.Serial('/dev/ttyACM0', 9600)
-	ser.write(chr(1))
+	#ser = serial.Serial('/dev/ttyACM0', 9600)
+	#ser.write("1\n")
 	bd.sueltoDispositivo(1)
 	
