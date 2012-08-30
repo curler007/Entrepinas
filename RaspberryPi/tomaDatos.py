@@ -8,7 +8,7 @@ s2 = float(arduino.getValor('2')) - 3
 if s1 != '-1':
 	bd.almacenaDato(1,s1)
 	print "Almacenado	T1: " + str(s1)
-if s2 != '-1':
+if s2 != '-4':
 	bd.almacenaDato(2,s2)
 	print "Almacenado	T2: " + str(s2)
 

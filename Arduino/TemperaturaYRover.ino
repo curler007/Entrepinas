@@ -93,7 +93,7 @@ void loopAtiendePeticiones(){
       //Serial.print(entradaInt);
       float t = getDato(entradaInt);
       Serial.println (t,DEC);
-    }else{
+    }else if(entrada == 'E' or entrada == 'A' or entrada == 'I'){
       ejecutaComando(entrada);
     }
   }
@@ -305,4 +305,3 @@ void loop(){
   loopAtiendePeticiones();
 //  loopRover();
 }
-

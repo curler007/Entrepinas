@@ -19,11 +19,20 @@ def getSerial():
 
 def writeSerial(com):
 	ser = getSerial()
+	retorno = "Error con el comando: " + str(com)
 	try:
 		ser.flush()
-		ser.write(com)
+		i =0
+		dato=''
+		while dato=='' and i<intentos:
+			ser.write(com)
+			dato = ser.readline()
+			i = i+1
+		retorno = "Comando ejecutado correctamente: " + str(dato)
 	finally:
 		ser.close()
+	return retorno
+	
 
 def readSerial(sensor):
 	logging.info('Declaro el serial')
@@ -87,11 +96,13 @@ def getValor(sensor):
 		return -1
 
 def ejecuta(com):
+	retorno = "Error llamando a ejecuta " + str(com)
 	if bd.accedoDispositivo(1) == 1:
 		try:
-			writeSerial(com)
+			retorno = writeSerial(com)
 		finally:
 			bd.sueltoDispositivo(1)
+	return retorno
 
 
 
