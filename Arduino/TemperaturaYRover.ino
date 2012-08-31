@@ -1,4 +1,3 @@
-
 //Entrada por Serie:
 // Los valores menores de 10 son para leer el estado, Arduino escribira por el serial la salida correspondiente
 // Los valores mayores o iguales de 10 son comandos, Arduino activar´ o desactivara la bomba
@@ -49,26 +48,11 @@ Pin en el que se conecta la salida para la DIRECCION INVERSA del conmutador de R
  int PIN_CONMUTADOR_POS_INVERSA = 8;
  
 
-/*
-	Indican el tiempo en milisegundos en que la bomba debe funcionar en cada una de sus posiciones
-*/
-long tiempoMaximoDireccionNormal = 10000;
-long tiempoMaximoDireccionInversa = 4000;
-
-/*
-	Variables que indican el momento en milisegundos, en que la bomba se posicionó en dirección normal o dirección inversa.
-*/
-long inicioDireccionNormal= 0;
-long inicioDireccionInversa = 0;
-
 int estadoPulsadorManualAutomatico=LOW;
 
 int estadoBomba = ESTADO_APAGADA;
 
 int modo=MODO_AUTOMATICO;
-
-
-
 
 
 
@@ -93,8 +77,11 @@ void loopAtiendePeticiones(){
       //Serial.print(entradaInt);
       float t = getDato(entradaInt);
       Serial.println (t,DEC);
-    }else if(entrada == 'E' or entrada == 'A' or entrada == 'I'){
+    }else if(entrada == COM_ACTIVAR_BOMBA or entrada == COM_APAGAR_BOMBA or entrada == COM_INVERTIR_BOMBA){
       ejecutaComando(entrada);
+      Serial.println(entrada);
+    }else{
+	Serial.println(-103,DEC);
     }
   }
   Serial.flush();
