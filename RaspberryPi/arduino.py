@@ -15,8 +15,7 @@ def getSerial():
 		ser = serial.Serial('/dev/ttyACM0',9600,timeout=3)
 	except Exception, e:
 		ser = serial.Serial('/dev/ttyACM1',9600,timeout=3)
-	if not ser.isOpen():
-		ser.open()
+	ser.open()
 
 	return ser
 
