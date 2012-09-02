@@ -305,7 +305,6 @@ void loopCompruebaInterruptor(){
       cambiarEstadoBomba(ESTADO_APAGADA);
     }
   }
-    
 }
 
 void loop(){
