@@ -1,6 +1,6 @@
 //Entrada por Serie:
 // Los valores menores de 10 son para leer el estado, Arduino escribira por el serial la salida correspondiente
-// Los valores mayores o iguales de 10 son comandos, Arduino activar¬¥ o desactivara la bomba
+// Los valores mayores o iguales de 10 son comandos, Arduino activar´ o desactivara la bomba
 
 //Modulo temperaturas:
 char const sensor1 = 1; //pin de conexion del sensor
@@ -27,8 +27,8 @@ int MODO_AUTOMATICO=0;
 int MODO_MANUAL=1;
 
 /*
-	El rel√© de Encendido estara abierto cuando tenga el valor LOW
-	El rel√© de direcci√≥n estar√° en al direcci√≥n normal cuando tenga el valor LOW
+	El relé de Encendido estara abierto cuando tenga el valor LOW
+	El relé de dirección estará en al dirección normal cuando tenga el valor LOW
 */
 int PIN_RELE_GENERAL = 4;
 int PIN_RELE_DIRECCION = 5;
@@ -236,7 +236,7 @@ void ejecutaComando(char comando){
   }
 }
 
-//Cambia el estado de la bomba al que se le indique por par√°metro.
+//Cambia el estado de la bomba al que se le indique por parámetro.
 void cambiarEstadoBomba(int nuevoEstado){
   if (estadoBomba != nuevoEstado){
     switch (nuevoEstado){
@@ -273,7 +273,7 @@ void cambiarEstadoBomba(int nuevoEstado){
 
 
 
-/*Devuelve el estado de funcionamiento a partir de la posici√≥n del conmutador manual*/
+/*Devuelve el estado de funcionamiento a partir de la posición del conmutador manual*/
 int getEstadoConmutadorManual(){
   int estado = ESTADO_APAGADA;
   int pinNormal =digitalRead(PIN_CONMUTADOR_POS_NORMAL);
