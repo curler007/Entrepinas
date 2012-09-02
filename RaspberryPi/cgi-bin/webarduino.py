@@ -21,17 +21,14 @@ class webarduino:
 
 
 	def GET(self,name): 
-		print "Entro"
 		param=web.input()
+		salida = "No se que accion es"
 		if param.action == ACCION_LECTURA:
-			
-			print arduino.getValor(param.sensor)
+			salida = arduino.getValor(param.sensor,1)
 		elif param.action == ACCION_COMANDO:
-			#println "%s",param.com
-			print arduino.ejecuta(param.com)
-			print "Accion ejecutada"
-		else:
-			print "No se que accion es"
+			salida = arduino.ejecuta(param.com)
+			
+		print salida				
 
 if __name__ == "__main__":
     app.run()

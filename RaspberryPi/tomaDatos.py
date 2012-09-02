@@ -3,8 +3,8 @@ sys.path.append("/home/pi/entrepinas/")
 import arduino
 import bd
 
-s1 = arduino.getValor('1')
-s2 = float(arduino.getValor('2')) - 3
+s1 = arduino.getValor('1',1)
+s2 = float(arduino.getValor('2'),1) - 3
 if s1 != '-1':
 	bd.almacenaDato(1,s1)
 	print "Almacenado	T1: " + str(s1)

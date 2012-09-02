@@ -10,10 +10,12 @@ import datetime
 #ser.write(chr(1));
 #t1 = ser.readline();
 tiempo1=datetime.datetime.now();
-t1 = arduino.getValor(1);
+t1 = arduino.getValor('1',1);
 tiempo2=datetime.datetime.now();
-t2 =float( arduino.getValor(2));
+t2 =float( arduino.getValor('2',1));
 tiempo3=datetime.datetime.now();
+t3 = arduino.getValor('3',1);
+tiempo4=datetime.datetime.now();
 
 print """\
 <html>
@@ -40,7 +42,26 @@ print """
 print tiempo3-tiempo2
 print """
 </li>
-</ul> 
+<li>Rover Pompe: <b>
+"""
+if (t3==0):
+	print "Apagada"
+if (t3==1):
+	print "Encendida"
+if (t3==2):
+	print "Invertida"
+print """
+</b> Tiempo en obtenerlo:
+"""
+print tiempo4-tiempo3
+print """
+</li>
+</ul>
+
+Acciones:
+<ul>
+<li><a href="webarduino.py?action=com&com=E">Encender a Rover</a></li>
+<li><a href="webarduino.py?action=com&com=A">Apagar a Rover</a></li></ul> 
 </body>
 </html>
 """
