@@ -1,0 +1,12 @@
+Entradas por Serial a Arduino (deben ser char):  
+
+    -'1': Consulta la temperatura del sensor 1. Retorna el valor de la temperatura.
+    -'2': Consulta la temperatura del sensor 2. Retorna el valor de la temperatura. 
+    -'3': Consulta el estado de Rover Pompe 3. Retorna 'A': Apagada, 'E': Encendida, 'I': Encendida con posición inversa
+    -'E': Enciende la bomba en su dirección normal. Devuelve 'E' si todo ha ido bien.
+    -'A': Apaga la bomba. Devuelve 'A' si todo ha ido bien
+    -'I': Enciende la bomba en sentido inverso. Devuelve 'I' si todo ha ido bien.
+
+Salidas (numéricas):
+    -Temperatura: será un número mayor de -100
+    -'-100': ha ocurrido algún error al realizar la operación. 
