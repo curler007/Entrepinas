@@ -61,10 +61,6 @@ def readSerial(sensor):
 		ser.close()
 	
 	return fdatored;
-<<<<<<< HEAD
-
-=======
->>>>>>> Incluidos Mensajes de Error y Acceso sin errores
 
 def getValor(sensor,reintentar):
 	logging.info('Entro en getValor, voy a comprobar el bloqueo del dispositivo')
@@ -84,21 +80,17 @@ def getValor(sensor,reintentar):
 
 def ejecuta(com):
 	retorno = BLOQUEADO 
-<<<<<<< HEAD
-	if bd.accedoDispositivo(1) == 1:
-=======
 	if dameBloqueoDispositivo(0):
->>>>>>> Incluidos Mensajes de Error y Acceso sin errores
 		try:
 			retorno = writeSerial(com)
 		finally:
 			bd.sueltoDispositivo(1)
 	return retorno
 
-<<<<<<< HEAD
+
 def reset():
 	bd.sueltoDispositivo(1)
-=======
+
 def dameBloqueoDispositivo(reintentar):
 	paso=0
 	if(reintentar):
@@ -107,7 +99,3 @@ def dameBloqueoDispositivo(reintentar):
         elif bd.accedoDispositivo(1) == 1:
                 paso=1
 	return paso;
-
-def reset():
-	bd.sueltoDispositivo(1)
->>>>>>> Incluidos Mensajes de Error y Acceso sin errores
