@@ -15,6 +15,7 @@ char const sensorEstadoBomba = 3;
 char const COM_ACTIVAR_BOMBA = 'E';
 char const COM_INVERTIR_BOMBA = 'I';
 char const COM_APAGAR_BOMBA = 'A';
+char const COM_OBLIGAR_AUTOMATICO = 'O';
 
 //MODULO ROVER POMPE
 //constantes
@@ -78,8 +79,12 @@ void loopAtiendePeticiones(){
       float t = getDato(entradaInt);
       Serial.println (t,DEC);
     }else if(entrada == COM_ACTIVAR_BOMBA or entrada == COM_APAGAR_BOMBA or entrada == COM_INVERTIR_BOMBA){
-      ejecutaComando(entrada);
-      Serial.println(entrada);
+      if(modo==MODO_AUTOMATICO){
+        ejecutaComando(entrada);
+        Serial.println(entrada);
+      }else{
+        Serial.println('M');
+      }
     }else{
 	Serial.println(-103,DEC);
     }
@@ -204,15 +209,15 @@ void setupRover() {
 //	}
 }*/
 
-void comprobarModo(){
+/*void comprobarModo(){
 	int nuevoEstadoPulsador = digitalRead(PIN_PULSADOR_AUTO);
-	
+
 	if (nuevoEstadoPulsador == HIGH){
 	  modo=MODO_AUTOMATICO;
         }else{
 	  modo=MODO_MANUAL;
 	}
-}
+}*/
 
 void ejecutaComando(char comando){
   switch(comando){
@@ -244,7 +249,7 @@ void cambiarEstadoBomba(int nuevoEstado){
          
         //Serial.println("Enciendo");
 	if (estadoBomba == ESTADO_DIR_INVERSA){
-		delay(100);
+		delay(600);
 	}
         digitalWrite(PIN_RELE_DIRECCION,LOW);
         digitalWrite(PIN_RELE_GENERAL,HIGH);
@@ -255,7 +260,7 @@ void cambiarEstadoBomba(int nuevoEstado){
 
 	if (estadoBomba == ESTADO_DIR_NORMAL){
             digitalWrite(PIN_RELE_GENERAL,LOW);
-		delay(100);
+		delay(600);
 	}
         digitalWrite(PIN_RELE_DIRECCION,HIGH);
         digitalWrite(PIN_RELE_GENERAL,HIGH);
@@ -288,7 +293,23 @@ void setup(){
   setupRover();
 }
 
+void loopCompruebaInterruptor(){
+  if (getEstadoConmutadorManual()!=ESTADO_APAGADA){
+    modo = MODO_MANUAL;
+    if (getEstadoConmutadorManual()!=estadoBomba){
+       cambiarEstadoBomba(getEstadoConmutadorManual());
+    }
+  }else{
+    if (modo== MODO_MANUAL){
+      modo = MODO_AUTOMATICO;
+      cambiarEstadoBomba(ESTADO_APAGADA);
+    }
+  }
+    
+}
+
 void loop(){
+  loopCompruebaInterruptor();
   loopAtiendePeticiones();
 //  loopRover();
 }
