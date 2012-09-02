@@ -6,8 +6,7 @@ Entradas por Serial a Arduino (deben ser char):
     -'E': Enciende la bomba en su dirección normal. Devuelve 'E' si todo ha ido bien.
     -'A': Apaga la bomba. Devuelve 'A' si todo ha ido bien
     -'I': Enciende la bomba en sentido inverso. Devuelve 'I' si todo ha ido bien.
-    -'O': Solo para casos de emergencia: Obliga a la bomba a pasar a modo Automático. Pensado para el caso de que la  bomba tenga puesto el interruptor en alguna posición y queramos activarla/desactivarla/invertirla en remoto.
-
+    
 
 Salidas (numéricas):
     -Temperatura: será un número mayor de -100
