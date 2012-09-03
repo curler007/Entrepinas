@@ -1,6 +1,6 @@
 //Entrada por Serie:
 // Los valores menores de 10 son para leer el estado, Arduino escribira por el serial la salida correspondiente
-// Los valores mayores o iguales de 10 son comandos, Arduino activar« o desactivara la bomba
+// Los valores mayores o iguales de 10 son comandos, Arduino activarï¿½ o desactivara la bomba
 
 //Modulo temperaturas:
 char const sensor1 = 1; //pin de conexion del sensor
@@ -27,8 +27,8 @@ int MODO_AUTOMATICO=0;
 int MODO_MANUAL=1;
 
 /*
-	El relŽ de Encendido estara abierto cuando tenga el valor LOW
-	El relŽ de direcci—n estar‡ en al direcci—n normal cuando tenga el valor LOW
+	El relï¿½ de Encendido estara abierto cuando tenga el valor LOW
+	El relï¿½ de direcciï¿½n estarï¿½ en al direcciï¿½n normal cuando tenga el valor LOW
 */
 int PIN_RELE_GENERAL = 4;
 int PIN_RELE_DIRECCION = 5;
@@ -52,6 +52,7 @@ Pin en el que se conecta la salida para la DIRECCION INVERSA del conmutador de R
 int estadoPulsadorManualAutomatico=LOW;
 
 int estadoBomba = ESTADO_APAGADA;
+int eepromEstadoBomba = 0;
 
 int modo=MODO_AUTOMATICO;
 
@@ -236,7 +237,7 @@ void ejecutaComando(char comando){
   }
 }
 
-//Cambia el estado de la bomba al que se le indique por par‡metro.
+//Cambia el estado de la bomba al que se le indique por parï¿½metro.
 void cambiarEstadoBomba(int nuevoEstado){
   if (estadoBomba != nuevoEstado){
     switch (nuevoEstado){
@@ -268,12 +269,15 @@ void cambiarEstadoBomba(int nuevoEstado){
       break;
     }  
     estadoBomba = nuevoEstado;
+    if (EEPROM.read(eepromEstadoBomba)!=estadoBomba){
+    	EEPROM.write(eepromEstadoBomba,estadoBomba);
+    }
   }
 }
 
 
 
-/*Devuelve el estado de funcionamiento a partir de la posici—n del conmutador manual*/
+/*Devuelve el estado de funcionamiento a partir de la posiciï¿½n del conmutador manual*/
 int getEstadoConmutadorManual(){
   int estado = ESTADO_APAGADA;
   int pinNormal =digitalRead(PIN_CONMUTADOR_POS_NORMAL);
@@ -307,7 +311,14 @@ void loopCompruebaInterruptor(){
   }
 }
 
+void loopVerificaPersistencia(){
+	if(EEPROM.read(eepromEstadoBomba)!=estadoBomba){
+		cambiarEstadoBomba(EEPROM.read(eepromEstadoBomba));
+	}
+}
+
 void loop(){
+  loopVerificaPersistencia();
   loopCompruebaInterruptor();
   loopAtiendePeticiones();
 //  loopRover();
