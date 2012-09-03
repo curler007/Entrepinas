@@ -1,3 +1,4 @@
+#include <EEPROM.h>
 //Entrada por Serie:
 // Los valores menores de 10 son para leer el estado, Arduino escribira por el serial la salida correspondiente
 // Los valores mayores o iguales de 10 son comandos, Arduino activar� o desactivara la bomba
