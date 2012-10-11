@@ -15,6 +15,12 @@ char const sensor5 = 5;
 
 char const sensorEstadoBomba = 6;
 
+//Para protejer a RoverPompe implementamos un sistema de timeout. Si se recibe una orden
+//de encendido de bomba el tiempo empezará a contar. Si se pierde la comunicación con Raspberry o Raspberry no envía
+//orden de apagado antes del TIME_OUT_ROVER, Arduino apagará la bomba para que no se queme. 
+//Timeout de Rover encendida, se establece a 2 minutos. 
+long const TIME_OUT_ROVER = 1000*60*2;
+
 //Seguimos en el mismo rango de constantes:
 char const COM_ACTIVAR_BOMBA = 'E';
 char const COM_INVERTIR_BOMBA = 'I';
@@ -30,8 +36,8 @@ int MODO_AUTOMATICO=0;
 int MODO_MANUAL=1;
 
 /*
-	El rel≈Ω de Encendido estara abierto cuando tenga el valor LOW
-	El rel≈Ω de direcci‚Äîn estar‚Ä° en al direcci‚Äîn normal cuando tenga el valor LOW
+	El rel˜O de Encendido estara abierto cuando tenga el valor LOW
+	El rel˜O de direcci‚Äîn estar‚Ä° en al direcci‚Äîn normal cuando tenga el valor LOW
 */
 int PIN_RELE_GENERAL = 3;
 int PIN_RELE_DIRECCION = 4;
@@ -55,6 +61,7 @@ Pin en el que se conecta la salida para la DIRECCION INVERSA del conmutador de R
 int estadoPulsadorManualAutomatico=LOW;
 
 int estadoBomba = ESTADO_APAGADA;
+long millisEncendida = 0;
 int eepromEstadoBomba = 0;
 
 int modo=MODO_AUTOMATICO;
@@ -256,11 +263,12 @@ void cambiarEstadoBomba(int nuevoEstado){
          
         //Serial.println("Enciendo");
 	if (estadoBomba == ESTADO_DIR_INVERSA){
+		digitalWrite(PIN_RELE_GENERAL,LOW);
 		delay(600);
 	}
         digitalWrite(PIN_RELE_DIRECCION,LOW);
         digitalWrite(PIN_RELE_GENERAL,HIGH);
-        
+        millisEncendida = millis();
       break;
       case ESTADO_DIR_INVERSA:
         //Serial.println("Invierto");
@@ -271,7 +279,7 @@ void cambiarEstadoBomba(int nuevoEstado){
 	}
         digitalWrite(PIN_RELE_DIRECCION,HIGH);
         digitalWrite(PIN_RELE_GENERAL,HIGH);
-        
+        millisEncendida = millis();
       break;
     }  
     estadoBomba = nuevoEstado;
@@ -324,9 +332,18 @@ void loopVerificaPersistencia(){
 	}
 }
 
+void loopBloqueSeguridadRover(){
+	if(ESTADO_APAGADA!=estadoBomba){
+		if ((millis()-millisEncendida)>TIME_OUT_ROVER){
+			cambiarEstadoBomba(ESTADO_APAGADA);
+		}
+	}
+}
+
 void loop(){
   loopVerificaPersistencia();
   loopCompruebaInterruptor();
+  loopBloqueSeguridadRover();
   loopAtiendePeticiones();
 //  loopRover();
 }
