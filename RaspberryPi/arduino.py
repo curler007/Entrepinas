@@ -8,7 +8,7 @@ intentos = 5
 BLOQUEADO = -101
 ERROR_LLAMANDO_ARDUINO = -102
 LOG_FILENAME = '/home/pi/entrepinas/log/log.out'
-logging.basicConfig(filename=LOG_FILENAME,level=logging.INFO,)
+logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%a, %d %b %Y %H:%M:%S', filename=LOG_FILENAME,level=logging.INFO,)
 
 def getSerial():
 	try:
@@ -48,6 +48,7 @@ def readSerial(sensor):
 		i=0
 		dato=''
 		while dato=='' and i<intentos:
+			logging.info('Escribo en arduino: ' + sensor)
 			ser.write(sensor)
 			logging.info('Leo el dato')
 			dato = ser.readline()
@@ -87,10 +88,13 @@ def ejecuta(com):
 			bd.sueltoDispositivo(1)
 	return retorno
 
+<<<<<<< HEAD
 
 def reset():
 	bd.sueltoDispositivo(1)
 
+=======
+>>>>>>> Últimos ajustes para puesta en producción
 def dameBloqueoDispositivo(reintentar):
 	paso=0
 	if(reintentar):
@@ -99,3 +103,9 @@ def dameBloqueoDispositivo(reintentar):
         elif bd.accedoDispositivo(1) == 1:
                 paso=1
 	return paso;
+<<<<<<< HEAD
+=======
+
+def reset():
+	bd.sueltoDispositivo(1)
+>>>>>>> Últimos ajustes para puesta en producción

@@ -3,5 +3,4 @@
 cd /home/pi/entrepinas
 chmod 777 /dev/ttyACM0
 python tomaDatos.py
-python cosm.py
 

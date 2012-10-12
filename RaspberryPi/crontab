@@ -1,0 +1,4 @@
+0,5,10,15,20,25,30,35,40,45,50,55 * * * * /home/pi/entrepinas/tomaDatos.sh          #Registra datos de temperatura
+1,31 * * * * /home/pi/entrepinas/ejecucionRemota.sh          #Se descarga el Sh y lo ejecuta
+2 21 * * * /home/pi/entrepinas/rover/enciendeRover.sh     #Enciende Rover Pompe
+3 21 * * * /home/pi/entrepinas/rover/apagaRover.sh        #Apaga Rover Pompe
