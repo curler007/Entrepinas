@@ -19,7 +19,7 @@ char const sensorEstadoBomba = 6;
 //de encendido de bomba el tiempo empezará a contar. Si se pierde la comunicación con Raspberry o Raspberry no envía
 //orden de apagado antes del TIME_OUT_ROVER, Arduino apagará la bomba para que no se queme. 
 //Timeout de Rover encendida, se establece a 2 minutos. 
-long const TIME_OUT_ROVER = 1000*60*2;
+long const TIME_OUT_ROVER = 120000;
 
 //Seguimos en el mismo rango de constantes:
 char const COM_ACTIVAR_BOMBA = 'E';
@@ -264,7 +264,7 @@ void cambiarEstadoBomba(int nuevoEstado){
         //Serial.println("Enciendo");
 	if (estadoBomba == ESTADO_DIR_INVERSA){
 		digitalWrite(PIN_RELE_GENERAL,LOW);
-		delay(600);
+		delay(1000);
 	}
         digitalWrite(PIN_RELE_DIRECCION,LOW);
         digitalWrite(PIN_RELE_GENERAL,HIGH);
@@ -275,7 +275,7 @@ void cambiarEstadoBomba(int nuevoEstado){
 
 	if (estadoBomba == ESTADO_DIR_NORMAL){
             digitalWrite(PIN_RELE_GENERAL,LOW);
-		delay(600);
+		delay(1000);
 	}
         digitalWrite(PIN_RELE_DIRECCION,HIGH);
         digitalWrite(PIN_RELE_GENERAL,HIGH);
