@@ -88,13 +88,6 @@ def ejecuta(com):
 			bd.sueltoDispositivo(1)
 	return retorno
 
-<<<<<<< HEAD
-
-def reset():
-	bd.sueltoDispositivo(1)
-
-=======
->>>>>>> Últimos ajustes para puesta en producción
 def dameBloqueoDispositivo(reintentar):
 	paso=0
 	if(reintentar):
@@ -103,9 +96,6 @@ def dameBloqueoDispositivo(reintentar):
         elif bd.accedoDispositivo(1) == 1:
                 paso=1
 	return paso;
-<<<<<<< HEAD
-=======
 
 def reset():
 	bd.sueltoDispositivo(1)
->>>>>>> Últimos ajustes para puesta en producción
